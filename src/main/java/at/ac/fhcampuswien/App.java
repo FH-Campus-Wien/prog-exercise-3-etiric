@@ -80,18 +80,17 @@ public class App {
 
     }
 
-    public static long[] lcg (long seed){
-        long [] randomNumbers = new long[10];
+    public static long[] lcg(long seed) {
+        long[] randomNumbers = new long[10];
         final long m = (long) Math.pow(2, 31);
         final long a = 1103515245;
         final long c = 12345;
 
-        for (int i = 0; i <= 9; i ++) {
+        for (int i = 0; i <= 9; i++) {
             if (i == 0) {
-                randomNumbers [i] = (a* seed + c) % m;
-            }
-            else {
-                randomNumbers [i] = (a* randomNumbers [i-1] + c) % m;
+                randomNumbers[i] = (a * seed + c) % m;
+            } else {
+                randomNumbers[i] = (a * randomNumbers[i - 1] + c) % m;
 
             }
         }
@@ -150,36 +149,29 @@ public class App {
 
     public static String camelCase(String string) {
 
-
-
-        int count = 0;
-        char [] charArray = string.toCharArray(); //Satz in Buchstaben teilen und speichern
-        StringBuilder sb = new StringBuilder();
-
-
+        char[] charArray = string.toCharArray(); //Satz in Buchstaben teilen und speichern
 
         ArrayList<String> arrayListChars = new ArrayList<>(charArray.length);
 
-        System.out.println(charArray);
+        charArray[0] = Character.toUpperCase(charArray[0]);
+
+        for (int i = 1; i < charArray.length; i++) {
+
+            if (Character.isLowerCase(charArray[i]) && Character.isWhitespace(charArray[i - 1])) {
+                charArray[i] = Character.toUpperCase(charArray[i]);
+
+
+            } else if (Character.isUpperCase(charArray[i]) && !Character.isWhitespace(charArray[i - 1])) {
+                charArray[i] = Character.toLowerCase(charArray[i]);
+            }
+
+        }
 
         for (int i = 0; i < charArray.length; i++) {
             arrayListChars.add(String.valueOf(charArray[i]));
-
-            if (Character.isUpperCase(charArray[i])) {
-                charArray[i] = Character.toLowerCase(charArray[i]);
-                System.out.println(charArray);
-            } else if (Character.isLowerCase(charArray[i])) {
-
-            }
         }
 
-
-
-
-
-
-        /*for (int i = 0; i < charArray.length; i++) {
-            count++;
+        for (int i = 0; i < charArray.length; i++) {
             if (arrayListChars.contains(" ")) {
                 arrayListChars.remove(" ");
 
@@ -196,22 +188,31 @@ public class App {
             } else if (arrayListChars.contains("'")) {
                 arrayListChars.remove("'");
             }
-*/
+        }
 
 
-        return " ";
+        String finalString = arrayListChars.get(0);
+
+        for (int i = 1; i < arrayListChars.size(); i++) {
+            finalString = finalString + arrayListChars.get(i);
+
+
+        }
+
+
+        return finalString;
     }
 
 
-    public static int checkDigit(int [] code) {
+    public static int checkDigit(int[] code) {
         int weighting = 1;
         int product = 0;
         int digit = 0;
 
         for (int i = 0; i < code.length; i++) {
-            weighting = weighting +1; //Gewichtung: Arrayy Position + 0
+            weighting = weighting + 1; //Gewichtung: Arrayy Position + 0
             product = product + code[i] * weighting; //Produkt = weighting * Code, Summe vom Ganzen
-            
+
             //Prüfziffer als int zurückliefern
         }
 
@@ -224,7 +225,7 @@ public class App {
             digit = 0;
         }
         return digit;
-    } 
+    }
 
     public static void main(String[] args) {
         // test your method implementations here
@@ -234,7 +235,8 @@ public class App {
 
         //AM ENDE ALLE METHODEN AUFRUFEN!
         System.out.println(camelCase("my name isn't Alice!"));
-       // guessingGame(randomNumberBetweenOneAndHundred()); -> Das lassen
+        System.out.println(camelCase("but a noisY noise annoYs an oYster more."));
+        // guessingGame(randomNumberBetweenOneAndHundred()); -> Das lassen
 
     }
 }
